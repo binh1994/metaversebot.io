@@ -1,7 +1,7 @@
 title: "MetaverseBot.io"
-description: "AI-powered insights on Metaverse, gaming, and blockchain worlds."
-baseurl: ""
+description: "AI-powered insights on the Metaverse, gaming, and blockchain worlds."
 url: "https://metaversebot.io"
+baseurl: ""
 
 theme: minima
 
@@ -9,6 +9,10 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-paginate
+
+paginate: 5
+paginate_path: "/page:num/"
 
 markdown: kramdown
 highlighter: rouge
