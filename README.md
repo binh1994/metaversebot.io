@@ -1,0 +1,1 @@
+Full Jekyll site for metaversebot.io — upload root to GitHub and deploy with Netlify (build: bundle exec jekyll build, publish: _site).
