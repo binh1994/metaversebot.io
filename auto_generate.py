@@ -1,41 +1,124 @@
 #!/usr/bin/env python3
-import os, datetime, random, json, requests
-DOMAINS = ["bottradingai.com", "botgame.io", "metaversebot.io", "nftgameai.com", "hubgaming.io", "botdefi.io", "esportsai.io", "nftgamepro.com", "botesports.com", "aiesports.io", "pronftgame.com", "botplay.io", "botweb3ai.com", "botblockchain.io"]
+# -*- coding: utf-8 -*-
+"""
+Auto-generate daily SEO article for metaversebot.io
+✅ Fixed KeyError (% include ad.html %)
+✅ Neon Metaverse theme
+✅ Includes backlinks, SEO description, ping Google
+"""
+
+import os
+import datetime
+import random
+import requests
+
+DOMAINS = [
+    "botgame.io", "metaversebot.io", "nftgameai.com", "hubgaming.io", "botdefi.io",
+    "esportsai.io", "nftgamepro.com", "botesports.com", "aiesports.io", "pronftgame.com",
+    "botplay.io", "botweb3ai.com", "botblockchain.io", "bottradingai.com"
+]
+
 TOPICS = [
-  "New AI Avatar Interaction Patterns in 2025",
-  "Designing Responsible Agents for Virtual Worlds",
-  "Optimizing NPC Pipeline with Edge AI",
-  "Tokenized Economies: AI & Virtual Commerce",
-  "Real-time Personalization with Agents"
+    "Metaverse economy trends 2025",
+    "AI + Web3 transforming virtual worlds",
+    "Digital identity and ownership in Metaverse",
+    "How NFT avatars redefine creativity",
+    "AI-driven game design and immersive worlds",
+    "Virtual finance and decentralized social spaces",
+    "Top Metaverse startups shaping 2025"
 ]
-IMAGES = [
-  "https://images.pexels.com/photos/8132695/pexels-photo-8132695.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop",
-  "https://images.pexels.com/photos/12483956/pexels-photo-12483956.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop",
-  "https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop"
+
+IMAGE_SOURCES = [
+    "https://images.pexels.com/photos/8132695/pexels-photo-8132695.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop",
+    "https://source.unsplash.com/1200x630/?metaverse,ai",
+    "https://picsum.photos/1200/630?random={}"
 ]
-def pick_backlinks():
-    others = DOMAINS[:]
-    random.shuffle(others)
-    return others[:3]
-def slugify(t): return t.lower().replace(' ','-').replace('/','-')
+
+def pick_image():
+    img = random.choice(IMAGE_SOURCES)
+    if "picsum" in img:
+        img = img.format(random.randint(1, 999999))
+    return img
+
+def make_backlinks():
+    random.shuffle(DOMAINS)
+    selected = DOMAINS[:5]
+    return "\n".join([f"- [{d}](https://{d})" for d in selected])
+
 def create_post():
-    title = random.choice(TOPICS)
-    date = datetime.date.today().isoformat()
-    slug = slugify(title)
-    fname = "_posts/{}-{}.md".format(date, slug)
-    image = random.choice(IMAGES)
-    backlinks = pick_backlinks()
-    content = "---\nlayout: post\ntitle: \"{}\"\ndate: {}\nauthor: \"Alex Reed – AI Metaverse Analyst\"\ndescription: \"{} — quick insights\"\nimage: \"{}\"\n---\n\n_In today’s fast-moving AI-driven metaverse, creators and users adapt quickly._\n\n{% include ad.html %}\n\n### Highlights\n- Bullet 1\n- Bullet 2\n\n---\n\n## Friendly Network Links\n".format(title, date, title, image)
-    for b in backlinks:
-        content += "- https://{}\n".format(b)
-    with open(fname, 'w', encoding='utf-8') as f:
+    today = datetime.date.today()
+    date_str = today.isoformat()
+    topic = random.choice(TOPICS)
+    img = pick_image()
+    desc = f"{topic} — insights for the AI-powered Metaverse world."
+    backlinks = make_backlinks()
+
+    # escaped Jekyll syntax safely
+    content = """---
+layout: post
+title: "{title}"
+date: {date}
+author: "Alex Reed – AI Metaverse Analyst"
+description: "{desc}"
+image: "{image}"
+---
+
+In today’s fast-moving AI-driven Metaverse, creators, investors, and players are shaping the future of digital life.
+
+{{% include ad.html %}}
+
+### Key Insights
+- Innovation through AI, VR, and blockchain
+- Decentralized finance in digital realms
+- Virtual economies powering real growth
+
+### Why it matters
+The Metaverse is not just entertainment — it’s the next digital frontier for creativity, commerce, and connection.
+
+---
+
+## Related Articles
+{{% for p in site.posts limit:4 %}}
+{{% if p.url != page.url %}}
+- [{{{{ p.title }}}}]({{{{ p.url }}}})
+{{% endif %}}
+{{% endfor %}}
+
+## Friendly Network Links
+{backlinks}
+
+---
+
+### 🛒 Domain for Sale
+This premium domain is available for acquisition:  
+👉 [Buy metaversebot.io on Afternic](https://afternic.com/domain/metaversebot.io)
+
+""".format(title=topic, date=date_str, desc=desc, image=img, backlinks=backlinks)
+
+    os.makedirs("_posts", exist_ok=True)
+    filename = f"_posts/{date_str}-{topic.lower().replace(' ', '-')}.md"
+
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(content)
-    print('Wrote', fname)
-    sitemap = 'https://metaversebot.io/sitemap.xml'
+
+    print(f"✅ Generated: {filename}")
+    return filename
+
+
+def ping_google():
     try:
-        requests.get('https://www.google.com/ping', params={'sitemap': sitemap}, timeout=10)
-        print('Pinged Google sitemap:', sitemap)
+        url = "https://www.google.com/ping?sitemap=https://metaversebot.io/sitemap.xml"
+        requests.get(url, timeout=10)
+        print("📡 Pinged Google successfully.")
     except Exception as e:
-        print('Ping failed', e)
-if __name__ == '__main__':
+        print("⚠️ Ping failed:", e)
+
+
+def main():
+    print("🚀 Auto-generating Metaverse post...")
     create_post()
+    ping_google()
+
+
+if __name__ == "__main__":
+    main()
