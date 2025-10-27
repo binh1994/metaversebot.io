@@ -1,41 +1,57 @@
 ---
 layout: default
 ---
-<article class="post container">
+
+<article class="post">
   <header class="post-header">
-    <h1>{{ page.title }}</h1>
-    <p class="byline">{{ page.author }} • {{ page.date | date: "%B %d, %Y" }}</p>
-    {% if page.image %}
-      <img src="{{ page.image }}" alt="{{ page.title }}" class="post-image">
-    {% endif %}
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">
+      {{ page.author }} • {{ page.date | date: "%B %d, %Y" }}
+    </p>
   </header>
+
+  {% if page.image %}
+  <div class="post-image">
+    <img src="{{ page.image | prepend: '/assets/images/' }}" alt="{{ page.title }}" loading="lazy">
+  </div>
+  {% endif %}
 
   <div class="post-content">
     {{ content }}
   </div>
 
-  <div class="post-ad">
-    {% include ad.html %}
-  </div>
+  <section class="domain-sale">
+    <h3>🛒 Domain for Sale</h3>
+    <p>This premium domain is available for acquisition:</p>
+    <p>
+      👉 <a href="https://afternic.com/domain/metaversebot.io" target="_blank">
+        Buy metaversebot.io on Afternic
+      </a>
+    </p>
+  </section>
 
-  <hr>
-  <div class="related">
-    <h3>Related Articles</h3>
+  <section class="related-posts">
+    <h3>📚 Related Articles</h3>
     <ul>
-      {% for p in site.posts limit:4 %}
-        {% if p.url != page.url %}
-          <li><a href="{{ p.url }}">{{ p.title }}</a></li>
-        {% endif %}
+      {% for post in site.posts limit:3 %}
+      {% if post.url != page.url %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      {% endif %}
       {% endfor %}
     </ul>
-  </div>
+  </section>
 
-  <div class="friendly-links">
-    <h4>Friendly Network Links</h4>
-    <ul>
-      {% for d in site.data.network_links %}
-        <li><a href="https://{{ d }}">{{ d }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
 </article>
+
+<footer class="footer-links">
+  <h3>Friendly Network Links</h3>
+  <ul>
+    <li><a href="https://bottradingai.com" target="_blank">bottradingai.com</a></li>
+    <li><a href="https://botgame.io" target="_blank">botgame.io</a></li>
+    <li><a href="https://metaversebot.io" target="_blank">metaversebot.io</a></li>
+    <li><a href="https://nftgameai.com" target="_blank">nftgameai.com</a></li>
+    <li><a href="https://botdefi.io" target="_blank">botdefi.io</a></li>
+    <li><a href="https://esportsai.io" target="_blank">esportsai.io</a></li>
+    <li><a href="https://aiesports.io" target="_blank">aiesports.io</a></li>
+  </ul>
+</footer>
