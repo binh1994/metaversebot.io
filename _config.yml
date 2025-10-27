@@ -1,5 +1,5 @@
 title: "MetaverseBot.io"
-description: "AI-powered insights on the Metaverse, gaming, and blockchain worlds."
+description: "AI-powered insights on the Metaverse, Web3, and blockchain worlds — explore the next frontier of digital intelligence."
 url: "https://metaversebot.io"
 baseurl: ""
 
@@ -11,7 +11,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-paginate
 
-paginate: 5
+paginate: 6
 paginate_path: "/page:num/"
 
 markdown: kramdown
@@ -22,3 +22,14 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+
+google_analytics: "G-9F89QC7PRD"
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Alex Reed – AI Metaverse Analyst"
