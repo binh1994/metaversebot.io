@@ -1,7 +1,7 @@
 # Gemfile — Netlify compatible for Jekyll 4.3.x
 source "https://rubygems.org"
 
-ruby "3.4.7"
+ruby "3.2.2"
 
 gem "jekyll", "~> 4.3.3"
 gem "webrick", "~> 1.8"
