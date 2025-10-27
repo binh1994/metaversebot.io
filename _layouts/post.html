@@ -12,7 +12,7 @@ layout: default
 
   {% if page.image %}
   <div class="post-image">
-    <img src="{{ page.image | prepend: '/assets/images/' }}" alt="{{ page.title }}" loading="lazy">
+    <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
   </div>
   {% endif %}
 
@@ -24,7 +24,7 @@ layout: default
     <h3>🛒 Domain for Sale</h3>
     <p>This premium domain is available for acquisition:</p>
     <p>
-      👉 <a href="https://afternic.com/domain/metaversebot.io" target="_blank">
+      👉 <a href="https://afternic.com/domain/metaversebot.io" target="_blank" class="buy-link">
         Buy metaversebot.io on Afternic
       </a>
     </p>
@@ -40,18 +40,4 @@ layout: default
       {% endfor %}
     </ul>
   </section>
-
 </article>
-
-<footer class="footer-links">
-  <h3>Friendly Network Links</h3>
-  <ul>
-    <li><a href="https://bottradingai.com" target="_blank">bottradingai.com</a></li>
-    <li><a href="https://botgame.io" target="_blank">botgame.io</a></li>
-    <li><a href="https://metaversebot.io" target="_blank">metaversebot.io</a></li>
-    <li><a href="https://nftgameai.com" target="_blank">nftgameai.com</a></li>
-    <li><a href="https://botdefi.io" target="_blank">botdefi.io</a></li>
-    <li><a href="https://esportsai.io" target="_blank">esportsai.io</a></li>
-    <li><a href="https://aiesports.io" target="_blank">aiesports.io</a></li>
-  </ul>
-</footer>
